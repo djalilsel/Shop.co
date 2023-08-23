@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 400;
+    src: url('/assets/fonts/satoshi/Satoshi-Light.woff2') format('woff2'),
+         url('/assets/fonts/satoshi/Satoshi-Light.woff') format('woff');
+} 
+ @font-face {
+    font-family: 'Satoshi';
+    font-weight: 500;
+    src: url('/client/assets/fonts/satoshi/Satoshi-Medium.eot') ;
+}
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 700;
+    src: url('/client/assets/fonts/satoshi/Satoshi-Bold.woff2') format('woff2'),
+         url('/client/assets/fonts/satoshi/Satoshi-Bold.woff') format('woff');
+}
+@font-face {
+    font-family: 'IntegralCF';
+    font-weight: 900;
+    src: url('/client/assets/fonts/integralCF/IntegralCF-Bold.woff2') format('woff2'),
+         url('/client/assets/fonts/integralCF/IntegralCF-ExtraBoldOblique.woff') format('woff');
+}
+
+.satoshi{
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 400;
+}
+.integral{
+    font-family: 'IntegralCF', sans-serif;
+    font-weight: 900;
+}
