@@ -26,9 +26,17 @@
          url('/client/assets/fonts/integralCF/IntegralCF-ExtraBoldOblique.woff') format('woff');
 }
 
-.satoshi{
+.satoshi-400{
     font-family: 'Satoshi', sans-serif;
     font-weight: 400;
+}
+.satoshi-500{
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+}
+.satoshi-700{
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
 }
 .integral{
     font-family: 'IntegralCF', sans-serif;
