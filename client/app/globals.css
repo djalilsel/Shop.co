@@ -42,3 +42,9 @@
     font-family: 'IntegralCF', sans-serif;
     font-weight: 900;
 }
+.no-selection{
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
