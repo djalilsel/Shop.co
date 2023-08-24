@@ -10,6 +10,9 @@ module.exports = {
       colors: {
         darkblack: "#000",
         basewhite: "#fff"
+      },
+      backgroundImage: {
+        'hero': `url('/_next/static/media/mainbg.png')`
       }
 
     },
