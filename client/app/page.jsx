@@ -1,5 +1,7 @@
 
 import NewArrivals from '../components/NewArrivals'
+import TopSelling from '../components/Topselling'
+import bg from '../assets/mainbg.png'
 import {
   star,
   bgphone,
@@ -11,13 +13,12 @@ import {
 } from '../assets'
 
 export default function Home() {
-  
 
   
   return (
       <main>
       {/* Hero */}
-      <div className="2xl:pt-32 lg:p-20 px-4 pt-10 lg:h-[100vh] 2xl:h-[85vh] relative lg:bg-hero lg:bg-no-repeat lg:bg-cover lg:bg-center flex flex-col">
+      <div className="2xl:pt-32 lg:p-20 px-4 pt-10 lg:h-[100vh] 2xl:h-[85vh] lg:bg-[url('/_next/static/media/mainbg.28b8a9ca.png')] relative lg:bg-no-repeat lg:bg-cover lg:bg-center flex flex-col">
         <div className='w-full lg:w-[40rem] flex flex-col gap-4 lg:gap-8'>
           <h1 className='integral text-5xl lg:text-7xl no-selection'>
             FIND CLOTHES <br />
@@ -62,14 +63,15 @@ export default function Home() {
         </div>
       </div>
       {/* brands */}
-      <div className='bg-darkblack flex justify-around items-center h-28'>
-        <img src={versace.src} className='h-7'/>
-        <img src={zara.src} className='h-7'/>
-        <img src={gucci.src} className='h-7'/>
-        <img src={prada.src} className='h-7'/>
-        <img src={calvin.src} className='h-7'/>
+      <div className='bg-darkblack flex flex-wrap justify-around py-8 gap-4 items-center h-40'>
+        <img src={versace.src} className='h-7 '/>
+        <img src={zara.src} className='h-7 '/>
+        <img src={gucci.src} className='h-7 '/>
+        <img src={prada.src} className='h-7 pl-16'/>
+        <img src={calvin.src} className='h-7 pr-16'/>
       </div>
       <NewArrivals />
+      <TopSelling />
     </main>
     
   )}
