@@ -31,7 +31,7 @@ const Topselling = () => {
     })
     return (
         <div>
-            <div className='h-[100vh] xl:px-24 p-4 border-b-2 border-[#00000010]'>
+            <div className='xl:h-screen h-fit xl:px-24 p-4'>
             <h1 className='text-darkback integral 2xl:text-[3rem] text-[2rem] block text-center 2xl:py-12 py-8'>
                 TOP SELLING
             </h1>

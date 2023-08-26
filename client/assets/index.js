@@ -5,6 +5,10 @@ import calvin from './brands/calvin.png'
 import gucci from './brands/gucci.png'
 import prada from './brands/prada.png'
 import zara from './brands/zara.png'
+import casual from './styles/casual.png'
+import formal from './styles/formal.png'
+import party from './styles/party.png'
+import gym from './styles/gym.png'
 
 export {
     star,
@@ -13,5 +17,9 @@ export {
     calvin,
     gucci,
     prada,
-    zara
+    zara,
+    casual,
+    formal,
+    party,
+    gym
 }

@@ -32,7 +32,7 @@ const NEWARRIVALS = newArrivals.map(product => {
   
 
     return (
-        <div className='h-[100vh] xl:px-24 p-4 border-b-2 border-[#00000010]'>
+        <div className='xl:h-[100vh] h-fit xl:px-24 p-4 border-b-2 border-[#00000010]'>
             <h1 className='text-darkback integral 2xl:text-[3rem] text-[2.5rem] block text-center 2xl:py-12 py-8'>
                 NEW ARRIVALS
             </h1>

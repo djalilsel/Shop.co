@@ -1,6 +1,7 @@
 
 import NewArrivals from '../components/NewArrivals'
 import TopSelling from '../components/Topselling'
+import BrowseStyles from '../components/BrowseStyles'
 import bg from '../assets/mainbg.png'
 import {
   star,
@@ -72,6 +73,7 @@ export default function Home() {
       </div>
       <NewArrivals />
       <TopSelling />
+      <BrowseStyles />
     </main>
     
   )}
