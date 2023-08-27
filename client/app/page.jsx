@@ -2,6 +2,7 @@
 import NewArrivals from '../components/NewArrivals'
 import TopSelling from '../components/Topselling'
 import BrowseStyles from '../components/BrowseStyles'
+import HappyRev from '../components/HappyRev'
 import bg from '../assets/mainbg.png'
 import {
   star,
@@ -74,6 +75,7 @@ export default function Home() {
       <NewArrivals />
       <TopSelling />
       <BrowseStyles />
+      <HappyRev />
     </main>
     
   )}

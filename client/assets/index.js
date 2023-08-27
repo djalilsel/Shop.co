@@ -9,6 +9,9 @@ import casual from './styles/casual.png'
 import formal from './styles/formal.png'
 import party from './styles/party.png'
 import gym from './styles/gym.png'
+import verified from './verified.png'
+import arrowRight from './arrow-down-bold 1.png'
+import arrowLeft from './arrow-down-bold 2.png'
 
 export {
     star,
@@ -21,5 +24,8 @@ export {
     casual,
     formal,
     party,
-    gym
+    gym,
+    verified,
+    arrowRight,
+    arrowLeft
 }
