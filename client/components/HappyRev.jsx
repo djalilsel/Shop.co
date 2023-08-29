@@ -29,7 +29,7 @@ const HappyRev = () => {
                 />
     })
     return (
-        <div className='h-[45vh] xl:h-[55vh] w-fill xl:px-24 px-4 overflow-hidden flex flex-col'>
+        <div className=' xl:h-fit w-fill pb-14 xl:pb-0 xl:px-24 px-4 overflow-hidden flex flex-col'>
             <div className='flex justify-between xl:items-center items-end'>
                 <h1 className='integral py-6 text-3xl xl:py-20 xl:text-6xl'>OUR HAPPY CUSTOMERS</h1>
                 <span className='flex gap-2 mr-4 xl:mr-0 h-8 w-fit mb-6 xl:mb-0'>

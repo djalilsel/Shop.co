@@ -3,7 +3,6 @@ import NewArrivals from '../components/NewArrivals'
 import TopSelling from '../components/Topselling'
 import BrowseStyles from '../components/BrowseStyles'
 import HappyRev from '../components/HappyRev'
-import StayUTD from '../components/StayUTD'
 import bg from '../assets/mainbg.png'
 import {
   star,
@@ -67,17 +66,16 @@ export default function Home() {
       </div>
       {/* brands */}
       <div className='bg-darkblack flex flex-wrap justify-around py-8 gap-4 items-center h-40'>
-        <img src={versace.src} className='h-7 '/>
-        <img src={zara.src} className='h-7 '/>
-        <img src={gucci.src} className='h-7 '/>
-        <img src={prada.src} className='h-7 pl-16'/>
-        <img src={calvin.src} className='h-7 pr-16'/>
+        <img src={versace.src} className='h-6 '/>
+        <img src={zara.src} className='h-6 '/>
+        <img src={gucci.src} className='h-6 '/>
+        <img src={prada.src} className='h-6 '/>
+        <img src={calvin.src} className='h-6 '/>
       </div>
       <NewArrivals />
       <TopSelling />
       <BrowseStyles />
       <HappyRev />
-      <StayUTD />
     </main>
     
   )}

@@ -31,11 +31,11 @@ const Topselling = () => {
     })
     return (
         <div>
-            <div className='xl:h-screen h-fit xl:px-24 p-4'>
+            <div className='h-fit xl:px-24 p-4'>
             <h1 className='text-darkback integral 2xl:text-[3rem] text-[2rem] block text-center 2xl:py-12 py-8'>
                 TOP SELLING
             </h1>
-            <div className='w-full overflow-hidden'>
+            <div className='w-full overflow-x-scroll overflow-y-hidden'>
               <div className='flex gap-16 w-fit xl:grid xl:grid-cols-4 xl:w-full xl:gap-4 xl:columns-sm'>
                 {TOPSELLING}
               </div>

@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className='bg-[#F0F0F0] sm:overflow-y-auto'>
         <Nav />
         {children}
         <Footer />

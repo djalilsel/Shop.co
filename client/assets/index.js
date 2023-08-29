@@ -12,6 +12,15 @@ import gym from './styles/gym.png'
 import verified from './verified.png'
 import arrowRight from './arrow-down-bold 1.png'
 import arrowLeft from './arrow-down-bold 2.png'
+import visa from './paiment/visa.png'
+import mastercard from './paiment/mastercard.png'
+import paypal from './paiment/paypal.png'
+import applepay from './paiment/applepay.png'
+import googlepay from './paiment/googlepay.png'
+import fullstar from './fullstar.png'
+import halfstar from './halfstar.png'
+import minus from './minus.png'
+import plus from './plus.png'
 
 export {
     star,
@@ -27,5 +36,14 @@ export {
     gym,
     verified,
     arrowRight,
-    arrowLeft
+    arrowLeft,
+    visa,
+    mastercard,
+    paypal,
+    applepay,
+    googlepay,
+    fullstar,
+    halfstar,
+    minus,
+    plus
 }
