@@ -83,7 +83,7 @@ const Footer = () => {
                 </div>
             </div>
             <hr className='h-4 text-[#00000010] mt-14'/>
-            <div className='flex flex-col xl:flex-row justify-between xl:mb-4'>
+            <div className='flex flex-col xl:flex-row xl:justify-between items-center xl:items-start xl:mb-4'>
                 <div className='text-[#00000060]'>Shop.co © 2000-2023, All Rights Reserved</div>
                 <div className='flex gap-3'>
                     <img src={visa.src} alt="visa" />

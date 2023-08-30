@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import ProductCard from './ProductCard'
+import Link from 'next/link';
 
 const NewArrivals = () => {
 
@@ -43,9 +44,9 @@ const NEWARRIVALS = newArrivals.map(product => {
               </div>
             </div>
             <div className='flex justify-center my-7'>
-              <div className='2xl:text-3xl w-full xl:w-fit text-center text-xl 2xl:px-20 2xl:py-5 px-12 py-3 border border-[#00000030] rounded-[4rem] satoshi-500 cursor-pointer'>
+              <Link href='/newarrivals' className='2xl:text-3xl w-full xl:w-fit text-center text-xl 2xl:px-20 2xl:py-5 px-12 py-3 border border-[#00000030] rounded-[4rem] satoshi-500 cursor-pointer'>
                 View All
-              </div>
+              </Link>
             </div>
         </div>
     );
