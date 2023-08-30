@@ -16,7 +16,7 @@ const Stars = ({ stars }) => {
     }
 
     return (
-        <div className='flex'>
+        <div className='flex no-selection'>
             {RATING}
         </div>
     );

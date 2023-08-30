@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faCartShopping, faBars, faTrashCan, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faCartShopping, faBars, faXmark, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import CartSlot from './CartSlot';
+import { downarrow } from '../assets';
 
 const Nav = () => {
 
@@ -42,11 +43,16 @@ const Nav = () => {
 
     const [cart, setCart] = useState(false)
     const [nav, setNav] = useState(false)
+    const [dropdown, setDropdown] = useState(false)
+    const [search, setSearch] = useState(false)
+    const [profile, setProfile] = useState(false)
     const [products, setProducts] = useState(JSON.parse(localStorage.cart))
-
+    
 
     const toggleCart = () => {
         setNav(false)
+        setSearch(false)
+        setProfile(false)
         setCart(!cart)
         if(cart){
             document.body.classList.remove('overflow-y-hidden')
@@ -56,6 +62,8 @@ const Nav = () => {
     }
     const toggleNav = () => {
         setCart(false)
+        setSearch(false)
+        setProfile(false)
         setNav(!nav)
         if(nav){
             document.body.classList.remove('overflow-y-hidden')
@@ -63,7 +71,18 @@ const Nav = () => {
             document.body.classList.add('overflow-y-hidden')
         }
     }
-
+    const toggleSearch = () => {
+        setCart(false)
+        setNav(false)
+        setProfile(false)
+        setSearch(!search)
+    }
+    const toggleProfile = () => {
+        setCart(false)
+        setNav(false)
+        setSearch(false)
+        setProfile(!profile)
+    }
 
     const PRODUCTS = products.map(product => {
         return <CartSlot 
@@ -94,9 +113,12 @@ const Nav = () => {
                     SHOP.CO
                 </Link>
                 <nav className='hidden lg:flex justify-center items-center gap-8 satoshi-400 cursor-default'>
-                    <Link href='/products'>
-                        Shop
-                    </Link>
+                    <div className='h-[96px] flex items-center' onMouseLeave={() => setDropdown(false)}>
+                        <Link href='/products' className='inline-block mr-1'>
+                            Shop
+                        </Link>
+                        <img id='dropdown' src={downarrow.src} onMouseOver={() => setDropdown(true)}  alt="more" className='inline-block w-3 h-3'/>
+                    </div>
                     <Link href='/onsale'>
                         On Sale
                     </Link>
@@ -116,17 +138,17 @@ const Nav = () => {
                 <div className='flex-1 sm:hidden'></div>
                 <div className='flex gap-4 justify-self-end'>
                     <div className='sm:hidden'>
-                        <FontAwesomeIcon icon={faSearch} className='text-[#000] fa-lg hidden' />
+                        <FontAwesomeIcon icon={faSearch} className='text-[#000] fa-lg hidden' onClick={toggleSearch}/>
                     </div>
                     <FontAwesomeIcon icon={faCartShopping} className='text-[#000] fa-lg' onClick={toggleCart}/>
-                    <FontAwesomeIcon icon={faCircleUser} className='text-[#000] fa-lg'/>
+                    <FontAwesomeIcon icon={faCircleUser} className='text-[#000] fa-lg' onClick={toggleProfile}/>
                 </div>
             </div>
             {cart && 
             <div className='w-screen h-screen bg-[#00000060] absolute top-0 right-0 z-30' onClick={toggleCart}></div>}
             {cart && 
             <div className='xl:block border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40'>
-                <div>
+                <div className='satoshi-700 text-2xl mb-1'>
                     Your Cart
                 </div>
                 <hr className='bg-[#00000060] h-[1.5px]'/>
@@ -164,6 +186,98 @@ const Nav = () => {
                         Brands
                     </Link>
                 </nav>
+            </div>}
+            {dropdown && 
+            <div className='border-b w-full text-[#00000060] border-[#00000060] bg-basewhite absolute top-[118px] left-0 xl:right-28 xl:top-[134px] px-64 py-8 z-40 flex gap-36 justify-center' onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+                <nav className='flex flex-col gap-3 satoshi-500 cursor-default text-lg'>
+                    <span className='satoshi-700 text-[#000000]'>New & Featured</span>
+                    <Link href='/products'>
+                        Shop
+                    </Link>
+                    <Link href='/onsale'>
+                        On Sale
+                    </Link>
+                    <Link href='/newarivals'>
+                        New Arrivals
+                    </Link>
+                    <Link href='/brands'>
+                        Brands
+                    </Link>
+                </nav>
+                <nav className='flex flex-col gap-3 satoshi-500 cursor-default text-lg'>
+                    <span className='satoshi-700 text-[#000000]'>Men</span>
+                    <Link href='/products'>
+                        Shop
+                    </Link>
+                    <Link href='/onsale'>
+                        On Sale
+                    </Link>
+                    <Link href='/newarivals'>
+                        New Arrivals
+                    </Link>
+                    <Link href='/brands'>
+                        Brands
+                    </Link>
+                </nav>
+                <nav className='flex flex-col gap-3 satoshi-500 cursor-default text-lg'>
+                    <span className='satoshi-700 text-[#000000]'>Women</span>
+                    <Link href='/products'>
+                        Shop
+                    </Link>
+                    <Link href='/onsale'>
+                        On Sale
+                    </Link>
+                    <Link href='/newarivals'>
+                        New Arrivals
+                    </Link>
+                    <Link href='/brands'>
+                        Brands
+                    </Link>
+                </nav>
+                <nav className='flex flex-col gap-3 satoshi-500 cursor-default text-lg'>
+                    <span className='satoshi-700 text-[#000000]'>Kids</span>
+                    <Link href='/products'>
+                        Shop
+                    </Link>
+                    <Link href='/onsale'>
+                        On Sale
+                    </Link>
+                    <Link href='/newarivals'>
+                        New Arrivals
+                    </Link>
+                    <Link href='/brands'>
+                        Brands
+                    </Link>
+                </nav>
+                
+            </div>}
+            {search && <div className='absolute top-[118px] left-0 z-40 h-20 sm:h-24 sm:px-32 px-4 w-full bg-basewhite flex gap-8 items-center boder-2 border-black'>
+                <div className='flex relative w-full'>
+                    <input type="text" placeholder='Search for products...' 
+                        className='satoshi no-selection w-full bg-[#F0F0F0] pl-[2.25rem] p-[0.75rem] rounded-[3.875rem]'
+                    />
+                    <FontAwesomeIcon icon={faSearch} className='text-[#000] absolute top-4 left-2 px-1' />
+                </div>
+            </div>}
+            {profile && 
+            <div className='border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40'>
+                <div className='w-80 xl:w-96 flex gap-6 items-center'>
+                    <FontAwesomeIcon icon={faCircleUser} className='fa-3x'/>
+                    <div className='flex flex-col justify-between text-lg'>
+                        <span className='satoshi-700'>
+                            Djalil Mr.User
+                        </span>
+                        <span className='satoshi-400 text-[#00000060]'>
+                            Custromer
+                        </span>
+                    </div>
+                </div>
+                <hr className='bg-[#00000060] h-[1.5px] my-4'/>
+                <div className='flex gap-4 w-full satoshi-700'>
+                    <Link href='/profile' className='flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setCart(false)}>
+                        View Profile
+                    </Link>
+                </div>
             </div>}
         </div>
     );

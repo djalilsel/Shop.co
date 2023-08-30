@@ -21,6 +21,7 @@ import fullstar from './fullstar.png'
 import halfstar from './halfstar.png'
 import minus from './minus.png'
 import plus from './plus.png'
+import downarrow from './downarrow.png'
 
 export {
     star,
@@ -45,5 +46,6 @@ export {
     fullstar,
     halfstar,
     minus,
-    plus
+    plus,
+    downarrow
 }
