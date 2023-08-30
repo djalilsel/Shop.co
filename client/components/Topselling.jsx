@@ -22,6 +22,7 @@ const Topselling = () => {
     const TOPSELLING = topSelling.map(product => {
     return <ProductCard
                 key={product.id}
+                id={product.id}
                 name={product.name}
                 image_url={product.image_url}
                 stars={product.stars}

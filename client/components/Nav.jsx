@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCartShopping, faBars, faXmark, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -8,46 +8,97 @@ import CartSlot from './CartSlot';
 import { downarrow } from '../assets';
 
 const Nav = () => {
-
-    const storage = [
-        {
-            id: 551,
-            image_url: 'https://i.pinimg.com/564x/d1/7e/a6/d17ea6f395639cbbf5d2e7fc7874fc99.jpg',
-            name: 'T-shirt with Tape Details',
-            size: 'Large',
-            variant_0_color: 'Brown',
-            current_price: 120,
-            number_of_units: 1
-        },
-        {
-            id: 553,
-            image_url: 'https://i.pinimg.com/736x/31/ee/ae/31eeae6c21238a6f45e965af6f72b8ba.jpg',
-            name: 'Checkered Shirt',
-            size: 'Small',
-            variant_0_color: 'Red',
-            current_price: 180,
-            number_of_units: 1
-        },
-        {
-            id: 554,
-            image_url: 'https://i.pinimg.com/736x/3f/02/b6/3f02b61a0d0eefa90e5dbe5bba4af0dd.jpg',
-            name: 'Sleeve Striped T-shirt',
-            size: 'X-Large',
-            variant_0_color: 'Orange',
-            current_price: 130,
-            number_of_units: 1
-        }
-    ]
-    localStorage.setItem("cart", JSON.stringify(storage))
-
-
     const [cart, setCart] = useState(false)
     const [nav, setNav] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [search, setSearch] = useState(false)
     const [profile, setProfile] = useState(false)
-    const [products, setProducts] = useState(JSON.parse(localStorage.cart))
-    
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        const storage = [
+            {
+                id: 551,
+                image_url: 'https://i.pinimg.com/564x/d1/7e/a6/d17ea6f395639cbbf5d2e7fc7874fc99.jpg',
+                name: 'T-shirt with Tape Details',
+                size: 'Large',
+                variant_0_color: 'Brown',
+                current_price: 120,
+                number_of_units: 1
+            },
+            {
+                id: 553,
+                image_url: 'https://i.pinimg.com/736x/31/ee/ae/31eeae6c21238a6f45e965af6f72b8ba.jpg',
+                name: 'Checkered Shirt',
+                size: 'Small',
+                variant_0_color: 'Red',
+                current_price: 180,
+                number_of_units: 1
+            },
+            {
+                id: 554,
+                image_url: 'https://i.pinimg.com/736x/3f/02/b6/3f02b61a0d0eefa90e5dbe5bba4af0dd.jpg',
+                name: 'Sleeve Striped T-shirt',
+                size: 'X-Large',
+                variant_0_color: 'Orange',
+                current_price: 130,
+                number_of_units: 1
+            }
+        ]
+        localStorage.setItem("cart", JSON.stringify(storage))
+        setProducts(JSON.parse(localStorage.cart))
+    }, [])
+
+
+
+    const removeItem = (index) => {
+        let storagee = []
+        products.map((product, indexx) => {
+            if(index === indexx){
+                return;
+            }
+            storagee.push(product)
+        })
+        localStorage.cart = JSON.stringify(storagee)
+        handleChange()
+    }
+    const plusUnits = (index) => {
+        console.log(index);
+        const storage = JSON.parse(localStorage.cart)
+        let storagee = []
+        products.map((product, indexx) => {
+            let prodi
+            if(index === indexx){
+                prodi = {...product, number_of_units: product.number_of_units + 1}
+            } else {
+                prodi = product
+            }
+            storagee.push(prodi)
+        })
+        localStorage.cart = JSON.stringify(storagee)
+        handleChange()
+    }
+    const minusUnits = (index) => {
+        console.log(index);
+        const storage = JSON.parse(localStorage.cart)
+        let storagee = []
+        products.map((product, indexx) => {
+            let prodi
+            if(index === indexx){
+                prodi = {...product, number_of_units: product.number_of_units - 1}
+                if(product.number_of_units - 1 === 0) return removeItem(index)
+            } else {
+                prodi = product
+            }
+            storagee.push(prodi)
+        })
+        localStorage.cart = JSON.stringify(storagee)
+        handleChange()
+    }
+
+    const handleChange = () => {
+        setProducts(JSON.parse(localStorage.cart))
+    }
 
     const toggleCart = () => {
         setNav(false)
@@ -84,23 +135,31 @@ const Nav = () => {
         setProfile(!profile)
     }
 
-    const PRODUCTS = products.map(product => {
+    let total = 0
+    const PRODUCTS = products.length === 0 ? <div className='satoshi-500 text-lg xl:w-96 w-80'>Cart is empty</div> :
+    products.map((product, index) => {
+        total = total + (product.current_price * product.number_of_units)
         return <CartSlot 
             key={product.id} 
+            index={index}
             image={product.image_url}
             name={product.name}
             size={product.size}
             color={product.variant_0_color}
             price={product.current_price}
             numberOfUnits={product.number_of_units}
+            removeItem={() => removeItem(index)}
+            plusUnits={() => plusUnits(index)}
+            minusUnits={() => minusUnits(index)}
+            handleChange={handleChange}
         />
     })
 
     return (
         <div className='flex flex-col z-40 sticky top-0 satoshi-500'>
-            <div className='z-40 px-4 sm:px-32 bg-darkblack text-[0.75rem] sm:text-[0.875rem] h-[2.375rem] w-full flex justify-center items-center text-basewhite '>
+            <div id='signUp' className='z-40 px-4 sm:px-32 bg-darkblack text-[0.75rem] sm:text-[0.875rem] h-[2.375rem] w-full flex justify-center items-center text-basewhite '>
                 <div>Sign up and get 20% off to your first order. <Link className='font-semibold underline underline-offset-2 cursor-default' href='/signup'>Sign Up Now</Link></div>
-                <div className='hidden no-selection sm:inline sm:absolute right-32 text-[1rem] cursor-pointer' onClick={() => document.querySelector('#signUp').style.display = "none"}>X</div>
+                <div className='hidden no-selection sm:inline sm:absolute right-32 text-[1rem] cursor-pointer' onClick={() => document.querySelector('#signUp').classList.add('hidden')}>X</div>
             </div>
             <div className='z-40 h-20 sm:h-24 sm:px-32 px-4 w-full bg-basewhite flex gap-8 items-center boder-2 border-black'>
                 {!nav && <div className='lg:hidden' onClick={toggleNav}>
@@ -157,7 +216,7 @@ const Nav = () => {
                 </div>
                 <hr className='bg-[#00000060] h-[1.5px]'/>
                 <div className='satoshi-700 my-3 text-right'>
-                    Total: $500
+                    Total: ${total}
                 </div>
                 <div className='flex gap-4 w-full satoshi-700'>
                     <Link href='/cart' className='text-basewhite bg-darkblack flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setCart(false)}>

@@ -13,6 +13,7 @@ import {
   versace,
   zara
 } from '../assets'
+import Link from 'next/link'
 
 export default function Home() {
 
@@ -32,9 +33,9 @@ export default function Home() {
             designed to bring out your individuality and cater to your sense 
             of style.
           </p>
-          <div className='bg-darkblack satoshi-400 rounded-[3.875rem] flex justify-center lg:inline lg:w-fit text-basewhite text-lg py-[1rem] px-[4.5rem] cursor-pointer'>
+          <Link href='/products' className='bg-darkblack satoshi-400 rounded-[3.875rem] flex justify-center lg:inline lg:w-fit text-basewhite text-lg py-[1rem] px-[4.5rem] cursor-pointer'>
               Shop Now
-          </div>
+          </Link>
         </div>
         <div>
           <div className='flex justify-center lg:justify-start lg:gap-8 2xl:gap-24 mt-10'>
