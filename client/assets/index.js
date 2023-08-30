@@ -22,6 +22,9 @@ import halfstar from './halfstar.png'
 import minus from './minus.png'
 import plus from './plus.png'
 import downarrow from './downarrow.png'
+import google from './google.png'
+import apple from './apple.png'
+import facebook from './facebook.png'
 
 export {
     star,
@@ -47,5 +50,8 @@ export {
     halfstar,
     minus,
     plus,
-    downarrow
+    downarrow,
+    google,
+    apple,
+    facebook
 }

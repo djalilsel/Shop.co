@@ -4,6 +4,7 @@ import cors from 'cors'
 import productsRouter from './routes/products.js'
 import reviewsRouter from './routes/reviews.js'
 import usersRouter from './routes/users.js'
+import authRouter from './routes/auth.js'
 
 app.use(express.json())
 app.use(cors({
@@ -13,5 +14,6 @@ app.use(cors({
 app.use('/api/products', productsRouter)
 app.use('/api/reviews', reviewsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/auth', authRouter)
 
 app.listen(8800, () => console.log("server listening on port 8800"))

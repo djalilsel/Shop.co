@@ -57,6 +57,10 @@
     background-image: url('/_next/static/media/mainbg.28b8a9ca.png');
 }
 
+input:checked ~ .custom-check:after{
+    background-color: black;
+} 
+
 
 
 
