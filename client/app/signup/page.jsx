@@ -32,10 +32,10 @@ const page = () => {
         if(!document.getElementById('terms').checked) return setError("You need to agree to the terms of service")
         setLoading("Loading")
         try{
-            const data = await axios.post('http://localhost:8800/api/auth/register', input)
+            const data = await axios.post('http://localhost:8800/api/auth/signup', input, { withCredentials: true })
             setLoading("User created")
             setTimeout(() => {
-                router.push('/signin')
+                router.push('/home')
             }, 1000);
         } catch(err){
             setLoading("Failed to create user")

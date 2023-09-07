@@ -6,8 +6,12 @@ import { faSearch, faCartShopping, faBars, faXmark, faUser } from '@fortawesome/
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import CartSlot from './CartSlot';
 import { downarrow } from '../assets';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Nav = () => {
+
+    const router = useRouter()
     const [cart, setCart] = useState(false)
     const [nav, setNav] = useState(false)
     const [dropdown, setDropdown] = useState(false)
@@ -49,8 +53,6 @@ const Nav = () => {
         setProducts(JSON.parse(localStorage.cart))
     }, [])
 
-
-
     const removeItem = (index) => {
         let storagee = []
         products.map((product, indexx) => {
@@ -63,8 +65,6 @@ const Nav = () => {
         handleChange()
     }
     const plusUnits = (index) => {
-        console.log(index);
-        const storage = JSON.parse(localStorage.cart)
         let storagee = []
         products.map((product, indexx) => {
             let prodi
@@ -79,8 +79,6 @@ const Nav = () => {
         handleChange()
     }
     const minusUnits = (index) => {
-        console.log(index);
-        const storage = JSON.parse(localStorage.cart)
         let storagee = []
         products.map((product, indexx) => {
             let prodi
@@ -98,6 +96,15 @@ const Nav = () => {
 
     const handleChange = () => {
         setProducts(JSON.parse(localStorage.cart))
+    }
+
+    const signout = async () => {
+        try{
+            const data = await axios.post("http://localhost:8800/api/auth/signout", {hello: "hello"}, { withCredentials: true })
+            router.push('/signin')
+        } catch(err){
+            console.log(err);
+        }
     }
 
     const toggleCart = () => {
@@ -135,32 +142,35 @@ const Nav = () => {
         setProfile(!profile)
     }
 
-    let total = 0
-    const PRODUCTS = products.length === 0 ? <div className='satoshi-500 text-lg xl:w-96 w-80'>Cart is empty</div> :
-    products.map((product, index) => {
-        total = total + (product.current_price * product.number_of_units)
-        return <CartSlot 
-            key={product.id} 
-            index={index}
-            image={product.image_url}
-            name={product.name}
-            size={product.size}
-            color={product.variant_0_color}
-            price={product.current_price}
-            numberOfUnits={product.number_of_units}
-            removeItem={() => removeItem(index)}
-            plusUnits={() => plusUnits(index)}
-            minusUnits={() => minusUnits(index)}
-            handleChange={handleChange}
-        />
-    })
+    const token = typeof document !== "undefined" ? !document.cookie.includes("jwt") : true
 
+    let total = 0
+
+    const PRODUCTS = products.length === 0 ? <div className='satoshi-500 text-lg xl:w-96 w-80'>Cart is empty</div> :
+        products.map((product, index) => {
+            total = total + (product.current_price * product.number_of_units)
+            return <CartSlot 
+                key={product.id} 
+                main_image={product.image_url}
+                name={product.name}
+                size={product.size}
+                color={product.variant_0_color}
+                current_price={product.current_price}
+                number_of_units={product.number_of_units}
+                removeItem={() => removeItem(index)}
+                plusUnits={() => plusUnits(index)}
+                minusUnits={() => minusUnits(index)}
+                handleChange={handleChange}
+            />
+        })
+    
     return (
-        <div className='flex flex-col z-40 sticky top-0 satoshi-500'>
+        <div className='flex flex-col z-40 sticky top-0 satoshi-500 border-b '>
+            {token && 
             <div id='signUp' className='z-40 px-4 sm:px-32 bg-darkblack text-[0.75rem] sm:text-[0.875rem] h-[2.375rem] w-full flex justify-center items-center text-basewhite '>
                 <div>Sign up and get 20% off to your first order. <Link className='font-semibold underline underline-offset-2 cursor-default' href='/signup'>Sign Up Now</Link></div>
                 <div className='hidden no-selection sm:inline sm:absolute right-32 text-[1rem] cursor-pointer' onClick={() => document.querySelector('#signUp').classList.add('hidden')}>X</div>
-            </div>
+            </div>}
             <div className='z-40 h-20 sm:h-24 sm:px-32 px-4 w-full bg-basewhite flex gap-8 items-center boder-2 border-black'>
                 {!nav && <div className='lg:hidden' onClick={toggleNav}>
                     <FontAwesomeIcon icon={faBars} className='fa-lg'/>
@@ -203,10 +213,10 @@ const Nav = () => {
                     <FontAwesomeIcon icon={faCircleUser} className='text-[#000] fa-lg' onClick={toggleProfile}/>
                 </div>
             </div>
-            {cart && 
-            <div className='w-screen h-screen bg-[#00000060] absolute top-0 right-0 z-30' onClick={toggleCart}></div>}
-            {cart && 
-            <div className='xl:block border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40'>
+            {cart &&
+            <div className='w-screen h-screen bg-[#00000060] absolute top-0 right-0 z-30' onClick={toggleCart} style={{top: token ? '136px' : '96px'}}></div>}
+            {cart &&
+            <div className='xl:block border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40' style={{top: token ? '136px' : '96px'}}>
                 <div className='satoshi-700 text-2xl mb-1'>
                     Your Cart
                 </div>
@@ -219,7 +229,7 @@ const Nav = () => {
                     Total: ${total}
                 </div>
                 <div className='flex gap-4 w-full satoshi-700'>
-                    <Link href='/cart' className='text-basewhite bg-darkblack flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setCart(false)}>
+                    <Link href='/home/cart' className='text-basewhite bg-darkblack flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setCart(false)}>
                         View cart
                     </Link>
                     <Link href='/checkout' className='flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setCart(false)}>
@@ -227,9 +237,9 @@ const Nav = () => {
                     </Link>
                 </div>
             </div>}
-            {nav && 
+            {nav &&
             <div className='w-screen h-screen bg-[#00000060] absolute top-0 right-0 z-30' onClick={toggleNav}></div>}
-            {nav && 
+            {nav &&
             <div className='xl:block border border-[#00000060] bg-basewhite absolute top-[118px] left-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40'>
                 <nav className='flex flex-col gap-3 satoshi-500 cursor-default text-lg'>
                     <Link href='/products'>
@@ -246,8 +256,8 @@ const Nav = () => {
                     </Link>
                 </nav>
             </div>}
-            {dropdown && 
-            <div className='border-b w-full text-[#00000060] border-[#00000060] bg-basewhite absolute top-[118px] left-0 xl:right-28 xl:top-[134px] px-64 py-8 z-40 flex gap-36 justify-center' onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+            {dropdown &&
+            <div className='border-b w-full text-[#00000060] border-[#00000060] bg-basewhite absolute top-[118px] left-0 xl:right-28 xl:top-[134px] px-64 py-8 z-40 flex gap-36 justify-center' style={{top: token ? '136px' : '96px'}} onMouseOver={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
                 <nav className='flex flex-col gap-3 satoshi-500 cursor-default text-lg'>
                     <span className='satoshi-700 text-[#000000]'>New & Featured</span>
                     <Link href='/products'>
@@ -310,7 +320,8 @@ const Nav = () => {
                 </nav>
                 
             </div>}
-            {search && <div className='absolute top-[118px] left-0 z-40 h-20 sm:h-24 sm:px-32 px-4 w-full bg-basewhite flex gap-8 items-center boder-2 border-black'>
+            {search &&
+            <div className='absolute top-[118px] left-0 z-40 h-20 sm:h-24 sm:px-32 px-4 w-full bg-basewhite flex gap-8 items-center boder-2 border-black'>
                 <div className='flex relative w-full'>
                     <input type="text" placeholder='Search for products...' 
                         className='satoshi no-selection w-full bg-[#F0F0F0] pl-[2.25rem] p-[0.75rem] rounded-[3.875rem]'
@@ -318,11 +329,11 @@ const Nav = () => {
                     <FontAwesomeIcon icon={faSearch} className='text-[#000] absolute top-4 left-2 px-1' />
                 </div>
             </div>}
-            {profile && 
-            <div className='border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40'>
+            {profile &&
+            <div className='border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40' style={{top: token ? '136px' : '96px'}}>
                 <div className='w-80 xl:w-96 flex gap-6 items-center'>
                     <FontAwesomeIcon icon={faCircleUser} className='fa-3x'/>
-                    <div className='flex flex-col justify-between text-lg'>
+                    <div className='flex flex-col justify-between text-lg flex-1'>
                         <span className='satoshi-700'>
                             Djalil Mr.User
                         </span>
@@ -330,6 +341,7 @@ const Nav = () => {
                             Custromer
                         </span>
                     </div>
+                    <span className='cursor-default satoshi-700 text-lg' onClick={signout}>Signout</span>
                 </div>
                 <hr className='bg-[#00000060] h-[1.5px] my-4'/>
                 <div className='flex gap-4 w-full satoshi-700'>

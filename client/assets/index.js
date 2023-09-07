@@ -25,6 +25,10 @@ import downarrow from './downarrow.png'
 import google from './google.png'
 import apple from './apple.png'
 import facebook from './facebook.png'
+import inArrow from './inArrow.png'
+import arrowDown from './arrowDown.png'
+import filters from './filters.png'
+import priceSlider from './priceSlider.png'
 
 export {
     star,
@@ -53,5 +57,9 @@ export {
     downarrow,
     google,
     apple,
-    facebook
+    facebook,
+    inArrow,
+    filters,
+    arrowDown,
+    priceSlider
 }

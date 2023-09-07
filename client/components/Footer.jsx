@@ -33,7 +33,7 @@ const Footer = () => {
                     <span className='integral text-5xl no-selection'>
                         SHOP.CO
                     </span>
-                    <p className='text-[#00000060] text-lg'>
+                    <p className='text-[#00000060] '>
                         We have clothes that suits your style and which you're proud to wear. From women to men.
                     </p>
                     <div className='flex gap-4'>
@@ -53,28 +53,28 @@ const Footer = () => {
                 </div>
                 <div className='w-full xl:flex xl:justify-between grid grid-cols-2 gap-6 overflow-hidden'>
                     <div className='h-full flex flex-col justify-between gap-4 xl:w-80'>
-                        <span className='text-2xl satoshi-500'>Company</span>
+                        <span className='text-2xl satoshi-500 tracking-widest'>COMPANY</span>
                         <Link href='/support' className='text-[#00000060] text-lg'>About</Link>
                         <Link href='/delivery' className='text-[#00000060] text-lg'>Features</Link>
                         <Link href='/terms' className='text-[#00000060] text-lg'>Works</Link>
                         <Link href='/policy' className='text-[#00000060] text-lg'>Career</Link>
                     </div>
                     <div className='h-full flex flex-col gap-4 justify-between w-80'>
-                        <span className='text-2xl satoshi-500'>Help</span>
+                        <span className='text-2xl satoshi-500 tracking-widest'>HELP</span>
                         <Link href='/support' className='text-[#00000060] text-lg'>Customer Support</Link>
                         <Link href='/delivery' className='text-[#00000060] text-lg'>Delivery Details</Link>
                         <Link href='/terms' className='text-[#00000060] text-lg'>Terms & Conditions</Link>
                         <Link href='/policy' className='text-[#00000060] text-lg'>Privacy Policy</Link>
                     </div>
                     <div className='h-full flex flex-col gap-4 justify-between w-80'>
-                        <span className='text-2xl satoshi-500'>FAQ</span>
+                        <span className='text-2xl satoshi-500 tracking-widest'>FAQ</span>
                         <Link href='/about' className='text-[#00000060] text-lg'>Account</Link>
                         <Link href='/features' className='text-[#00000060] text-lg'>Manage Deliveries</Link>
                         <Link href='/works' className='text-[#00000060] text-lg'>Orders</Link>
                         <Link href='/career' className='text-[#00000060] text-lg'>Payments</Link>
                     </div>
                     <div className='h-full flex flex-col gap-4 justify-between w-fit'>
-                        <span className='text-2xl satoshi-500'>Resources</span>
+                        <span className='text-2xl satoshi-500 tracking-widest'>RESOURCES</span>
                         <Link href='/about' className='text-[#00000060] text-lg'>Free eBooks</Link>
                         <Link href='/features' className='text-[#00000060] text-lg'>Development Tutorial</Link>
                         <Link href='/works' className='text-[#00000060] text-lg'>How to - Blog</Link>
@@ -85,7 +85,7 @@ const Footer = () => {
             <hr className='h-4 text-[#00000010] mt-14'/>
             <div className='flex flex-col xl:flex-row xl:justify-between items-center xl:items-start xl:mb-4'>
                 <div className='text-[#00000060]'>Shop.co © 2000-2023, All Rights Reserved</div>
-                <div className='flex gap-3'>
+                <div className='flex gap-1 xl:gap-3'>
                     <img src={visa.src} alt="visa" />
                     <img src={mastercard.src} alt="mastercard"/>
                     <img src={paypal.src} alt="paypal"/>

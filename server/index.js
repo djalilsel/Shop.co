@@ -5,11 +5,14 @@ import productsRouter from './routes/products.js'
 import reviewsRouter from './routes/reviews.js'
 import usersRouter from './routes/users.js'
 import authRouter from './routes/auth.js'
+import cookieParser from 'cookie-parser'
 
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:3000"
+    origin: "http://localhost:3000",
+    credentials: true
 }))
+app.use(cookieParser())
 
 app.use('/api/products', productsRouter)
 app.use('/api/reviews', reviewsRouter)

@@ -4,13 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { apple, facebook, google } from '../../assets';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
 
+    const router = useRouter()
+    const [error, setError] = useState('')
     const [input, setInput] = useState({
         user: '',
         password: '',
     })
+
+    const singin = async () => {
+        try{
+            const data = await axios.post("http://localhost:8800/api/auth/signin", input, { withCredentials: true})
+            localStorage.setItem('user', JSON.stringify(data.data))
+            router.push('/home')
+        } catch(err){
+            setError(err.response.data)
+        }
+    }
     const showPass = () => {
         document.querySelector('#pass').type = "text"
         document.querySelector('#hideeye').classList.add('block')
@@ -56,6 +70,7 @@ const page = () => {
                         <FontAwesomeIcon id='hideeye' icon={faEyeSlash} className='hidden text-darkblack absolute top-10 right-3' onClick={hidePass}/>
                     </div>
                 </div>
+                {error && <span className='satoshi-400 py-4 text-[#bc4646] text-xl self-start my-[-22px]'>{error}</span>}
                 <div className='flex justify-between w-full gap-3 text-[#00000080] self-start'>
                     <div className='flex items-center gap-1'>
                         <input type='checkbox' className='accent-darkblack w-5 h-5'/>
@@ -63,7 +78,7 @@ const page = () => {
                     </div>
                     <span className='underline underline-offset-2'>Forgot Password?</span>
                 </div>
-                <div className='flex justify-center w-full satoshi-700 border bg-darkblack text-basewhite py-3 px-6'>
+                <div className='flex justify-center w-full satoshi-700 border bg-darkblack text-basewhite py-3 px-6' onClick={singin}>
                    SIGN IN
                 </div>
                 <span>OR</span>
