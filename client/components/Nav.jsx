@@ -101,6 +101,7 @@ const Nav = () => {
     const signout = async () => {
         try{
             const data = await axios.post("http://localhost:8800/api/auth/signout", {hello: "hello"}, { withCredentials: true })
+            localStorage.removeItem('user')
             router.push('/signin')
         } catch(err){
             console.log(err);
@@ -163,9 +164,9 @@ const Nav = () => {
                 handleChange={handleChange}
             />
         })
-    
+
     return (
-        <div className='flex flex-col z-40 sticky top-0 satoshi-500 border-b '>
+        <div className='flex flex-col z-[50] sticky top-0 satoshi-500 border-b '>
             {token && 
             <div id='signUp' className='z-40 px-4 sm:px-32 bg-darkblack text-[0.75rem] sm:text-[0.875rem] h-[2.375rem] w-full flex justify-center items-center text-basewhite '>
                 <div>Sign up and get 20% off to your first order. <Link className='font-semibold underline underline-offset-2 cursor-default' href='/signup'>Sign Up Now</Link></div>
@@ -335,19 +336,22 @@ const Nav = () => {
                     <FontAwesomeIcon icon={faCircleUser} className='fa-3x'/>
                     <div className='flex flex-col justify-between text-lg flex-1'>
                         <span className='satoshi-700'>
-                            Djalil Mr.User
+                            {localStorage.user ? JSON.parse(localStorage.user)[0].name : 'Guest'}
                         </span>
                         <span className='satoshi-400 text-[#00000060]'>
                             Custromer
                         </span>
                     </div>
-                    <span className='cursor-default satoshi-700 text-lg' onClick={signout}>Signout</span>
+                    {localStorage.user && <span className='cursor-default satoshi-700 text-lg' onClick={signout}>Signout</span>}
                 </div>
                 <hr className='bg-[#00000060] h-[1.5px] my-4'/>
                 <div className='flex gap-4 w-full satoshi-700'>
-                    <Link href='/profile' className='flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setCart(false)}>
+                    {localStorage.user ? <Link href='/profile' className='flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setProfile(false)}>
                         View Profile
-                    </Link>
+                    </Link> : 
+                    <Link href='/signin' className='flex-1 text-center border border-darkblack py-3 px-6' onClick={() => setProfile(false)}>
+                        Sign In
+                    </Link>}
                 </div>
             </div>}
         </div>

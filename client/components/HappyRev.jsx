@@ -9,17 +9,17 @@ const HappyRev = () => {
     const [reviews, setReviews] = useState([])
     const ref = useRef()
 
-    useEffect(() => {
-        async function getReviews() {
-            try{
-                const data = await axios.get("http://localhost:8800/api/reviews/happycustomers")
-                setReviews(data.data)
-            } catch(err){
-                console.log(err);
-            }
-        }
-        getReviews()
-    }, [])
+    // useEffect(() => {
+    //     async function getReviews() {
+    //         try{
+    //             const data = await axios.get("http://localhost:8800/api/reviews/happycustomers")
+    //             setReviews(data.data)
+    //         } catch(err){
+    //             console.log(err);
+    //         }
+    //     }
+    //     getReviews()
+    // }, [])
 
     const handleHorizantalScroll = (element, speed, distance, step) => {
         let scrollAmount = 0;

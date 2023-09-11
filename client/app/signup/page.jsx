@@ -33,7 +33,8 @@ const page = () => {
         setLoading("Loading")
         try{
             const data = await axios.post('http://localhost:8800/api/auth/signup', input, { withCredentials: true })
-            setLoading("User created")
+            localStorage.setItem('user', JSON.stringify(data.data.user))
+            setLoading(data.data.msg)
             setTimeout(() => {
                 router.push('/home')
             }, 1000);

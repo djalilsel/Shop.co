@@ -6,67 +6,29 @@ import Link from 'next/link';
 
 const NewArrivals = () => {
 
-const [newArrivals, setNewArrivals] = useState([
-  {
-    id: 551,
-    name: "T-shirt with Tape Details",
-    current_price: 120.00,
-    raw_price: 120.00,
-    discount: 0,
-    main_image: "https://i.pinimg.com/564x/d1/7e/a6/d17ea6f395639cbbf5d2e7fc7874fc99.jpg",
-    stars: 4.5,
-  },
-  {
-    id: 552,
-    name: "Skinny Fit Jeans",
-    current_price: 240.00,
-    raw_price: 260.00,
-    discount: 20,
-    main_image: "https://i.pinimg.com/564x/74/24/c8/7424c8917fe975182d00b80ed8788d68.jpg",
-    stars: 3.5,
-  },
-  {
-    id: 553,
-    name: "Checkered Shirt",
-    current_price: 180.00,
-    raw_price: 180.00,
-    discount: 0,
-    main_image: "https://i.pinimg.com/736x/31/ee/ae/31eeae6c21238a6f45e965af6f72b8ba.jpg",
-    stars: 4.5,
-  },
-  {
-    id: 554,
-    name: "Sleeve Striped T-shirt",
-    current_price: 130.00,
-    raw_price: 160.00,
-    discount: 30,
-    main_image: "https://i.pinimg.com/736x/3f/02/b6/3f02b61a0d0eefa90e5dbe5bba4af0dd.jpg",
-    stars: 4.5,
-  }
-])
+const [newArrivals, setNewArrivals] = useState([])
   
-// useEffect(() => {
-//   const fetchNewArrivls = async () => {
-//     try{
-//       const data = await axios.get("http://localhost:8800/api/products/newarrivals")
-//       setNewArrivals(data.data)
-//     } catch(err){
-//       console.log(err)
-//     }
-//   }
-//   fetchNewArrivls()
-// }, [])
+  useEffect(() => {
+    const fetchNewArrivls = async () => {
+      try{
+        const data = await axios.get("http://localhost:8800/api/products/newarrivals")
+        setNewArrivals(data.data)
+      } catch(err){
+        console.log(err)
+      }
+    }
+    fetchNewArrivls()
+  }, [])
 
 const NEWARRIVALS = newArrivals.map(product => {
   return <ProductCard
             key={product.id}
             id={product.id}
             name={product.name}
-            image_url={product.main_image}
-            stars={product.stars}
-            current_price={product.current_price}
-            raw_price={product.raw_price}
-            discount={product.discount}
+            product_image={product.product_image}
+            stars={4.5}
+            price={product.price}
+            discount_rate={product.discount_rate ? product.discount_rate : 0}
           />
 })
   

@@ -142,7 +142,7 @@ const page = () => {
             <div className='flex gap-2 satoshi-400 text-[#00000060]'>{URL}</div>
             <div className='filters absolute hidden xl:hidden w-screen h-screen bg-[#00000060] top-0 right-0 z-40' onClick={toggleFilters}></div>
             <div className='flex gap-6 w-full h-fit py-9 '>
-                <div id='filters' className='absolute hidden overflow-y-scroll xl:overflow-auto bg-basewhite top-0 left-0 w-screen h-fit xl:relative flex-[2] xl:h-fit xl:flex flex-col xl:gap-6 border border-[#00000030] px-[1.25rem] py-[1.5rem] rounded-[1.25rem] z-[60]'>
+                <div id='filters' className='absolute hidden overflow-y-scroll xl:overflow-auto bg-basewhite top-0 left-0 w-screen h-fit xl:relative flex-[2] xl:h-fit xl:flex flex-col xl:gap-6 border border-[#00000030] px-[1.25rem] py-[1.5rem] rounded-[1.25rem] z-40'>
                     <div className='flex justify-between items-center'>
                         <span className='satoshi-700 '>Filters</span>
                         <img src={filters.src} alt="filters" className='hidden xl:block w-6 h-6'/>

@@ -26,29 +26,32 @@ export const signupUser = (req, res) => {
         hash,
         req.body.email
     ]
-    const qq = 'SELECT * FROM users WHERE name = ?'
+    const qq = 'SELECT * FROM site_user WHERE name = ?'
 
     db.query(qq, req.body.name, (err, data) => {
         if(data.length > 0) return res.status(403).json("name already taken")
 
-        const qqq = 'SELECT * FROM users WHERE email = ?'
+        const qqq = 'SELECT * FROM site_user WHERE email_address = ?'
 
         db.query(qqq, req.body.email, (err, data) => {
             if(err) throw res.status(500).json(err)
             if(data.length > 0) return res.status(403).json("Email already linked with an account, Try account recovery")
 
-            const qqqq = 'SELECT * FROM users WHERE user = ?'
+            const qqqq = 'SELECT * FROM site_user WHERE user = ?'
             
             db.query(qqqq, req.body.user, (err, data) => {
                 if(err) throw res.status(500).json(err)
                 if(data.length > 0) return res.status(403).json("User already taken")
 
-                const q = 'INSERT INTO users (id, name, user, password, email) VALUES (?)'
+                const q = 'INSERT INTO site_user (id, name, user, password, email_address) VALUES (?)'
         
                 db.query(q, [values], (err, data) => {
                     if(err) throw res.status(500).json(err)
                     const token = createToken(id)
-                    res.cookie('jwt', token, { maxAge: maxAge * 1000 }).status(200).json("user created")
+                    res.cookie('jwt', token, { maxAge: maxAge * 1000 }).status(200).json({msg: "user created", user: [{
+                        id: id,
+                        name: req.body.name
+                    }]})
                     })
                 })
 
@@ -59,14 +62,14 @@ export const signupUser = (req, res) => {
 
 export const signinUser = (req, res) => {
 
-    const q = "SELECT (password) FROM users WHERE user = ?"
+    const q = "SELECT (password) FROM site_user WHERE user = ?"
     db.query(q, req.body.user, (err, data) => {
         if(err) throw res.status(500).json(err)
         if(data.length === 0) return res.status(404).json("Wrong user")
         bcrypt.compare(req.body.password, data[0].password, (err, result) => {
             if(result){
-                const qq = "SELECT (id) FROM users WHERE user = ?"
-                db.query(qq, req.body.user, (err, data) => {
+                const qq = "SELECT (id), (name) FROM site_user WHERE user = ?"
+                db.query(qq, [req.body.user], (err, data) => {
                     if(err) throw res.status(500).json(err)
                     const token = createToken(data[0].id)
                     res.cookie('jwt', token, { maxAge: maxAge * 1000}).json(data)

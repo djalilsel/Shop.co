@@ -19,6 +19,7 @@ const page = () => {
     const singin = async () => {
         try{
             const data = await axios.post("http://localhost:8800/api/auth/signin", input, { withCredentials: true})
+            console.log(data);
             localStorage.setItem('user', JSON.stringify(data.data))
             router.push('/home')
         } catch(err){
