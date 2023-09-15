@@ -13,6 +13,13 @@ const createToken = (id) => {
         expiresIn: maxAge
     })
 }
+const createCart = (user_id) => {
+    const id = nanoid()
+    const q = `INSERT INTO shopping_cart VALUES ('${id}', '${user_id}')`
+    db.query(q, (err, data) => {
+        if(err) return console.log(err)
+    })
+}
 
 export const signupUser = (req, res) => {
     const saltRounds = 10
@@ -48,6 +55,7 @@ export const signupUser = (req, res) => {
                 db.query(q, [values], (err, data) => {
                     if(err) throw res.status(500).json(err)
                     const token = createToken(id)
+                    createCart(id)
                     res.cookie('jwt', token, { maxAge: maxAge * 1000 }).status(200).json({msg: "user created", user: [{
                         id: id,
                         name: req.body.name

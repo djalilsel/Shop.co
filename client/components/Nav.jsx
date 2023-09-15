@@ -11,6 +11,8 @@ import { useRouter } from 'next/navigation';
 
 const Nav = () => {
 
+
+    const userId = JSON.parse(localStorage.user)[0].id
     const router = useRouter()
     const [cart, setCart] = useState(false)
     const [nav, setNav] = useState(false)
@@ -18,80 +20,74 @@ const Nav = () => {
     const [search, setSearch] = useState(false)
     const [profile, setProfile] = useState(false)
     const [products, setProducts] = useState([])
+    const [reload, setReload] = useState(false)
 
     useEffect(() => {
-        const storage = [
-            {
-                id: 551,
-                image_url: 'https://i.pinimg.com/564x/d1/7e/a6/d17ea6f395639cbbf5d2e7fc7874fc99.jpg',
-                name: 'T-shirt with Tape Details',
-                size: 'Large',
-                variant_0_color: 'Brown',
-                current_price: 120,
-                number_of_units: 1
-            },
-            {
-                id: 553,
-                image_url: 'https://i.pinimg.com/736x/31/ee/ae/31eeae6c21238a6f45e965af6f72b8ba.jpg',
-                name: 'Checkered Shirt',
-                size: 'Small',
-                variant_0_color: 'Red',
-                current_price: 180,
-                number_of_units: 1
-            },
-            {
-                id: 554,
-                image_url: 'https://i.pinimg.com/736x/3f/02/b6/3f02b61a0d0eefa90e5dbe5bba4af0dd.jpg',
-                name: 'Sleeve Striped T-shirt',
-                size: 'X-Large',
-                variant_0_color: 'Orange',
-                current_price: 130,
-                number_of_units: 1
-            }
-        ]
-        localStorage.setItem("cart", JSON.stringify(storage))
+    //     const storage = [
+    //         {
+    //             id: 551,
+    //             image_url: 'https://i.pinimg.com/564x/d1/7e/a6/d17ea6f395639cbbf5d2e7fc7874fc99.jpg',
+    //             name: 'T-shirt with Tape Details',
+    //             size: 'Large',
+    //             variant_0_color: 'Brown',
+    //             current_price: 120,
+    //             number_of_units: 1
+    //         },
+    //         {
+    //             id: 553,
+    //             image_url: 'https://i.pinimg.com/736x/31/ee/ae/31eeae6c21238a6f45e965af6f72b8ba.jpg',
+    //             name: 'Checkered Shirt',
+    //             size: 'Small',
+    //             variant_0_color: 'Red',
+    //             current_price: 180,
+    //             number_of_units: 1
+    //         },
+    //         {
+    //             id: 554,
+    //             image_url: 'https://i.pinimg.com/736x/3f/02/b6/3f02b61a0d0eefa90e5dbe5bba4af0dd.jpg',
+    //             name: 'Sleeve Striped T-shirt',
+    //             size: 'X-Large',
+    //             variant_0_color: 'Orange',
+    //             current_price: 130,
+    //             number_of_units: 1
+    //         }
+    //     ]
+        // localStorage.setItem("cart", JSON.stringify(storage))
         setProducts(JSON.parse(localStorage.cart))
-    }, [])
+    }, [reload])
+        const removeCartItem = async (productId) => {
+            try{
+                const data = await axios.post(`http://localhost:8800/api/users/cart/delete/item`,{ userId: userId, productId: productId })
+                if(data.status === 200){
+                    localStorage.setItem("cart", JSON.stringify(data.data))
+                    window.location.reload()
+                }
+            }catch(err){
+                console.log(err)
+            }
+        }
 
-    const removeItem = (index) => {
-        let storagee = []
-        products.map((product, indexx) => {
-            if(index === indexx){
-                return;
+    const plusUnits = async (productId, qty) => {
+        try{
+            const data = await axios.patch(`http://localhost:8800/api/users/cart/update/item`,{ userId: userId, productId: productId, qty: qty, add: true })
+            if(data.status === 200){
+                localStorage.setItem("cart", JSON.stringify(data.data))
+                setReload(!reload)
             }
-            storagee.push(product)
-        })
-        localStorage.cart = JSON.stringify(storagee)
-        handleChange()
+        }catch(err){
+            console.log(err)
+        }
     }
-    const plusUnits = (index) => {
-        let storagee = []
-        products.map((product, indexx) => {
-            let prodi
-            if(index === indexx){
-                prodi = {...product, number_of_units: product.number_of_units + 1}
-            } else {
-                prodi = product
+    const minusUnits = async (productId, qty) => {
+        try{
+            const data = await axios.patch(`http://localhost:8800/api/users/cart/update/item`,{ userId: userId, productId: productId, qty: qty, add: false })
+            if(data.status === 200){
+                localStorage.setItem("cart", JSON.stringify(data.data))
+                setReload(!reload)
             }
-            storagee.push(prodi)
-        })
-        localStorage.cart = JSON.stringify(storagee)
-        handleChange()
-    }
-    const minusUnits = (index) => {
-        let storagee = []
-        products.map((product, indexx) => {
-            let prodi
-            if(index === indexx){
-                prodi = {...product, number_of_units: product.number_of_units - 1}
-                if(product.number_of_units - 1 === 0) return removeItem(index)
-            } else {
-                prodi = product
-            }
-            storagee.push(prodi)
-        })
-        localStorage.cart = JSON.stringify(storagee)
-        handleChange()
+        }catch(err){
+            console.log(err)
+        }
     }
 
     const handleChange = () => {
@@ -146,21 +142,19 @@ const Nav = () => {
     const token = typeof document !== "undefined" ? !document.cookie.includes("jwt") : true
 
     let total = 0
-
     const PRODUCTS = products.length === 0 ? <div className='satoshi-500 text-lg xl:w-96 w-80'>Cart is empty</div> :
         products.map((product, index) => {
-            total = total + (product.current_price * product.number_of_units)
+            total = total + (product.price * product.qty)
             return <CartSlot 
-                key={product.id} 
-                main_image={product.image_url}
+                key={product.product_id} 
+                main_image={product.product_image}
                 name={product.name}
-                size={product.size}
                 color={product.variant_0_color}
-                current_price={product.current_price}
-                number_of_units={product.number_of_units}
-                removeItem={() => removeItem(index)}
-                plusUnits={() => plusUnits(index)}
-                minusUnits={() => minusUnits(index)}
+                current_price={product.price}
+                number_of_units={product.qty}
+                removeItem={() => removeCartItem(product.product_id)}
+                plusUnits={() => plusUnits(product.product_id, product.qty)}
+                minusUnits={() => minusUnits(product.product_id, product.qty)}
                 handleChange={handleChange}
             />
         })
@@ -217,7 +211,7 @@ const Nav = () => {
             {cart &&
             <div className='w-screen h-screen bg-[#00000060] absolute top-0 right-0 z-30' onClick={toggleCart} style={{top: token ? '136px' : '96px'}}></div>}
             {cart &&
-            <div className='xl:block border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40' style={{top: token ? '136px' : '96px'}}>
+            <div className='xl:block border border-[#00000060] bg-basewhite absolute top-[118px] right-0 xl:right-28 xl:top-[134px] px-12 py-8 z-40 overflow-y-scroll' style={{top: token ? '136px' : '96px'}}>
                 <div className='satoshi-700 text-2xl mb-1'>
                     Your Cart
                 </div>
