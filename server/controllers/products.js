@@ -44,7 +44,16 @@ export const getNewArrivals = (req, res) => {
                         const qqq = "SELECT product.id, product.name, product.product_image, product_item.price, discount_rate FROM product JOIN product_item ON product.id = product_item.product_id JOIN promotion_product ON product.id = promotion_product.product_id JOIN promotion ON promotion_product.promotion_id = promotion.id WHERE product.id = ? AND promotion.start_date < ? AND promotion.end_date > ?"
                         db.query(qqq, [data[i].id, time, time], (err, dataaaa) => {
                                 if(err) throw res.status(500).json(err)
-                                resolve(dataaaa[0]) 
+                                if(dataaaa.length === 0) {
+
+                                    const qqq = "SELECT product.id, product.name, product.product_image, product_item.price FROM product JOIN product_item ON product.id = product_item.product_id WHERE product.id = ?"
+                                    db.query(qqq, data[i].id, (err, dataaa) => {
+                                        if(err) throw res.status(500).json(err)
+                                        resolve(dataaa[0]) 
+                                    })
+                                } else{
+                                    resolve(dataaaa[0]) 
+                                }
                             })
                     }
                 })
@@ -89,7 +98,17 @@ export const getTopSelling = (req, res) => {
                         const qqq = "SELECT product.id, product.name, product.product_image, product_item.price, discount_rate FROM product JOIN product_item ON product.id = product_item.product_id JOIN promotion_product ON product.id = promotion_product.product_id JOIN promotion ON promotion_product.promotion_id = promotion.id WHERE product.id = ? AND promotion.start_date < ? AND promotion.end_date > ?"
                         db.query(qqq, [data[i].id, time, time], (err, dataaaa) => {
                                 if(err) throw res.status(500).json(err)
-                                resolve(dataaaa[0]) 
+                                if(dataaaa.length === 0) {
+
+                                    const qqq = "SELECT product.id, product.name, product.product_image, product_item.price FROM product JOIN product_item ON product.id = product_item.product_id WHERE product.id = ?"
+                                    db.query(qqq, data[i].id, (err, dataaa) => {
+                                        if(err) throw res.status(500).json(err)
+                                        resolve(dataaa[0]) 
+                                    })
+                                } else{
+
+                                    resolve(dataaaa[0]) 
+                                }
                             })
                     }
                 })
@@ -139,12 +158,26 @@ export const getProduct = (req, res) => {
                         db.query(qqq, [data[0].id, time, time], (err, dataaaa) => {
                                 if(err) throw res.status(500).json(err)
                                 const qqqq = "SELECT (variation_option.variation_id), (variation_option.value) FROM product_configuration JOIN variation_option ON product_configuration.variation_option_id = variation_option.id WHERE product_configuration.product_item_id = ?"
+                                if(dataaaa.length === 0) {
+                                    const qqq = "SELECT product.id, product.name, product.product_image, product_item.price, product_item.id AS product_item_id, product.description FROM product JOIN product_item ON product.id = product_item.product_id WHERE product.id = ?"
+                                    db.query(qqq, data[0].id, (err, dataaa) => {
+                                        if(err) throw res.status(500).json(err)
+                                        const qqqq = "SELECT (variation_option.variation_id), (variation_option.value) FROM product_configuration JOIN variation_option ON product_configuration.variation_option_id = variation_option.id WHERE product_configuration.product_item_id = ?"
 
-                                db.query(qqqq, dataaaa[0].product_item_id, (err, dataaaaa) => {
-                                    if(err) throw res.status(500).json(err)
-                                    
-                                    res.status(200).json({prodData: dataaaa[0], variations: dataaaaa[0]}) 
-                                })
+                                            db.query(qqqq, dataaa[0].product_item_id, (err, dataaaaa) => {
+                                                if(err) throw res.status(500).json(err)
+                                                
+                                                res.status(200).json({prodData: dataaa[0], variations: dataaaaa}) 
+                                            })
+                                    })
+                                } else{
+
+                                    db.query(qqqq, dataaaa[0].product_item_id, (err, dataaaaa) => {
+                                        if(err) throw res.status(500).json(err)
+                                        
+                                        res.status(200).json({prodData: dataaaa[0], variations: dataaaaa[0]}) 
+                                    })
+                                }
                             })
                     }
                 })

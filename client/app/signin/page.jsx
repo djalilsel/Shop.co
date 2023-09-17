@@ -19,8 +19,9 @@ const page = () => {
     const singin = async () => {
         try{
             const data = await axios.post("http://localhost:8800/api/auth/signin", input, { withCredentials: true})
-            console.log(data);
-            localStorage.setItem('user', JSON.stringify(data.data))
+            console.log(data.data);
+            localStorage.setItem('user', JSON.stringify(data.data.user))
+            localStorage.setItem('cart', JSON.stringify(data.data.cart))
             router.push('/home')
         } catch(err){
             setError(err.response.data)

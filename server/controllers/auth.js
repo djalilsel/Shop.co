@@ -54,14 +54,26 @@ export const signupUser = (req, res) => {
         
                 db.query(q, [values], (err, data) => {
                     if(err) throw res.status(500).json(err)
-                    const token = createToken(id)
-                    createCart(id)
-                    res.cookie('jwt', token, { maxAge: maxAge * 1000 }).status(200).json({msg: "user created", user: [{
-                        id: id,
-                        name: req.body.name
-                    }]})
-                    })
+                    const q = "SELECT id FROM shopping_cart WHERE user_id = ?"
+
+                    db.query(q, data[0].id, (err, dataaa) => {
+                        if(err) throw res.status(500).json(err)
+                        if(dataaa.length === 0) return res.status(404).json(`No cart for user with id: ${data[0].id}`)
+                        
+                        const qq = "SELECT product_item.product_id, product.product_image, product.name, product_item.price, shopping_cart_item.qty FROM shopping_cart_item JOIN product_item ON product_item.id = shopping_cart_item.product_item_id JOIN product ON product.id = product_item.product_id WHERE shopping_cart_item.cart_id = ?"
+
+                        db.query(qq, dataaa[0].id, (err, dataa) => {
+                            if(err) throw res.status(500).json(err)
+                            const token = createToken(id)
+                            createCart(id)
+                            return res.cookie('jwt', token, { maxAge: maxAge * 1000 }).status(200).json({msg: "user created", user: [{
+                                id: id,
+                                name: req.body.name
+                            }]}).status(200).json(dataa)
+                        })
+                    }) 
                 })
+            })
 
         })
 
@@ -80,7 +92,20 @@ export const signinUser = (req, res) => {
                 db.query(qq, [req.body.user], (err, data) => {
                     if(err) throw res.status(500).json(err)
                     const token = createToken(data[0].id)
-                    res.cookie('jwt', token, { maxAge: maxAge * 1000}).json(data)
+
+                    const q = "SELECT id FROM shopping_cart WHERE user_id = ?"
+
+                    db.query(q, data[0].id, (err, dataaa) => {
+                        if(err) throw res.status(500).json(err)
+                        if(dataaa.length === 0) return res.status(404).json(`No cart for user with id: ${data[0].id}`)
+                        
+                        const qq = "SELECT product_item.product_id, product.product_image, product.name, product_item.price, shopping_cart_item.qty FROM shopping_cart_item JOIN product_item ON product_item.id = shopping_cart_item.product_item_id JOIN product ON product.id = product_item.product_id WHERE shopping_cart_item.cart_id = ?"
+
+                        db.query(qq, dataaa[0].id, (err, dataa) => {
+                            if(err) throw res.status(500).json(err)
+                            return res.cookie('jwt', token, { maxAge: maxAge * 1000}).status(200).json({cart: dataa, user: data})
+                        })
+                    })  
                 })
             } else{
                 res.status(404).json("Wrong password")

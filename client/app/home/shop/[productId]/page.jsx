@@ -156,44 +156,20 @@ const page = () => {
                 />
     })
 
-    const mightLike = [
-        {
-            id: 222,
-            name: "Polo with Contrast Trims",
-            main_image: "https://i.pinimg.com/564x/9b/cb/33/9bcb33772d201b7d995e358fd3c96a94.jpg",
-            stars: 4.0,
-            current_price: 212,
-            raw_price: 232,
-            discount: 20
-        },
-        {
-            id: 333,
-            name: "Gradient Graphic T-shirt",
-            main_image: "https://i.pinimg.com/564x/66/c0/44/66c04479b6275203b1c20cb824ccff65.jpg",
-            stars: 3.5,
-            current_price: 145,
-            raw_price: 145,
-            discount: 0
-        },
-        {
-            id: 444,
-            name: "Polo with Tipping Details",
-            main_image: "https://i.pinimg.com/564x/a8/14/dc/a814dc98d1c56249130dffc3a5ce578a.jpg",
-            stars: 4.5,
-            current_price: 180,
-            raw_price: 180,
-            discount: 0
-        },
-        {
-            id: 555,
-            name: "Black Striped T-shirt",
-            main_image: "https://i.pinimg.com/564x/07/c9/7f/07c97fa0104cf2803107792be5cf3779.jpg",
-            stars: 5.0,
-            current_price: 120,
-            raw_price: 150,
-            discount: 30
-        },
-    ]
+    const [mightLike, setMightLike] = useState([])
+  
+    useEffect(() => {
+        const fetchMightLike = async () => {
+        try{
+            const data = await axios.get("http://localhost:8800/api/products/newarrivals")
+            setMightLike(data.data)
+        } catch(err){
+            console.log(err)
+        }
+        }
+        fetchMightLike()
+    }, [])
+
     const COLORS = variations.colors.map(color => {
         return <div className='rounded-full h-10 w-10' style={{backgroundColor: color}}></div>
     })
@@ -203,15 +179,14 @@ const page = () => {
 
     const MIGHTLIKE = mightLike.map(product => {
         return <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  image_url={product.main_image}
-                  stars={product.stars}
-                  current_price={product.current_price}
-                  raw_price={product.raw_price}
-                  discount={product.discount}
-                />
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                product_image={product.product_image}
+                stars={4.5}
+                price={product.price}
+                discount_rate={product.discount_rate ? product.discount_rate : 0}
+            />
       })
     return (
         <div className='xl:px-24 px-4 py-9 flex flex-col gap-12'>

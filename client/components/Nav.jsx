@@ -23,39 +23,9 @@ const Nav = () => {
     const [reload, setReload] = useState(false)
 
     useEffect(() => {
-    //     const storage = [
-    //         {
-    //             id: 551,
-    //             image_url: 'https://i.pinimg.com/564x/d1/7e/a6/d17ea6f395639cbbf5d2e7fc7874fc99.jpg',
-    //             name: 'T-shirt with Tape Details',
-    //             size: 'Large',
-    //             variant_0_color: 'Brown',
-    //             current_price: 120,
-    //             number_of_units: 1
-    //         },
-    //         {
-    //             id: 553,
-    //             image_url: 'https://i.pinimg.com/736x/31/ee/ae/31eeae6c21238a6f45e965af6f72b8ba.jpg',
-    //             name: 'Checkered Shirt',
-    //             size: 'Small',
-    //             variant_0_color: 'Red',
-    //             current_price: 180,
-    //             number_of_units: 1
-    //         },
-    //         {
-    //             id: 554,
-    //             image_url: 'https://i.pinimg.com/736x/3f/02/b6/3f02b61a0d0eefa90e5dbe5bba4af0dd.jpg',
-    //             name: 'Sleeve Striped T-shirt',
-    //             size: 'X-Large',
-    //             variant_0_color: 'Orange',
-    //             current_price: 130,
-    //             number_of_units: 1
-    //         }
-    //     ]
-        // localStorage.setItem("cart", JSON.stringify(storage))
         setProducts(JSON.parse(localStorage.cart))
     }, [reload])
-        const removeCartItem = async (productId) => {
+    const removeCartItem = async (productId) => {
             try{
                 const data = await axios.post(`http://localhost:8800/api/users/cart/delete/item`,{ userId: userId, productId: productId })
                 if(data.status === 200){
@@ -65,7 +35,7 @@ const Nav = () => {
             }catch(err){
                 console.log(err)
             }
-        }
+    }
 
     const plusUnits = async (productId, qty) => {
         try{
@@ -98,6 +68,7 @@ const Nav = () => {
         try{
             const data = await axios.post("http://localhost:8800/api/auth/signout", {hello: "hello"}, { withCredentials: true })
             localStorage.removeItem('user')
+            localStorage.removeItem('cart')
             router.push('/signin')
         } catch(err){
             console.log(err);
@@ -158,7 +129,6 @@ const Nav = () => {
                 handleChange={handleChange}
             />
         })
-
     return (
         <div className='flex flex-col z-[50] sticky top-0 satoshi-500 border-b '>
             {token && 
